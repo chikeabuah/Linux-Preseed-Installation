@@ -1,0 +1,113 @@
+Chike Abuah
+Department of Computer Science
+Grinnell College
+July 19, 2012
+abuahchu@grinnell.edu
+
+Log file for setting up preseed thumb-drive for 64 bit machines on the Mathlan. 
+Tested on mathews.cs.grinnell.edu with general success.
+
+I started with a 4GB Kingston flashdrive and searched for a comprehensive guide online for the Debian preseed installation procedure using a flash drive. 
+
+I found one here: http://www.wallix.org/2011/11/02/automatic-installation-of-debian-squeeze-from-a-usb-flash-drive/
+
+To prepare the USB flash drive, I inserted it into michie's USB port and logged on as root. I then ran a search for all the partitions on the system using:
+
+>fdisk -l
+
+I identified the flash drive as being attached to /dev/sdb. I ran fdisk in command mode for this partiton using
+
+>fdisk /dev/sdb
+
+In command mode, you use single-letter commands to specify the actions you wish to take. I began by removing the two existing partitions on the flash drive.
+
+To print and identify the partitions:
+
+>p
+
+Then
+
+>d
+>1
+>d
+>2
+
+At this point I created two new partitions to store the preseeder. In retrospect, however, we shall only need one.
+
+>n 
+>p (primary partition here)
+
+Here we must specify the size of the partition. Since we shall only need one, just hit the enter key twice to use the default: the entire flash drive.
+Now we make this partition bootable:
+
+>a
+>1
+
+To save our changes and permanently write this partition table:
+
+>w
+
+At this point there was a name change by the system for /dev/sdb to /dev/sdc
+Now we shall create a filesystem on our partition:
+
+>mkfs.ext2 /dev/sdc1
+or
+>mkfs.ext3 /dev/sdc1
+
+There were a few complaints about being unable to create the filesystem because /dev/sdc was currently mounted, at which point this helped:
+
+>umount /dev/sdc1
+
+Now, we must install grub on our partition
+
+>mkdir /mnt/usb
+>mount /dev/sdc1 /mnt/usb
+>grub-install --root-directory=/mnt/usb /dev/sdc
+
+Grub was sucessfully installed. Now to set up the hd-media method of the Debian installer:
+
+> mkdir /mnt/usb/hdmedia-squeeze
+> wget http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/hd-media/vmlinuz -O /mnt/usb/hdmedia-squeeze/vmlinuz
+
+>or installer-i386 for 32 bit
+
+> wget http://ftp.debian.org/debian/dists/squeeze/main/installer-amd64/current/images/hd-media/initrd.gz -O /mnt/usb/hdmedia-squeeze/initrd.gz
+> mkdir /mnt/usb/isos
+> cp /setup/images/debian-6.0.5-amd64-DVD-1.iso /mnt/usb/isos/
+
+> or /home/abuahchu/sysadmin/isos/...
+
+> cp /home/abuahchu/sysadmin/isos/debian-6.0.5-i386-netinst.iso /mnt/usb/isos/
+
+I actually used the net installer ("netinst") version of the 64bit .iso image, but this way may be more convenient in retrospect. As long as your dlash drive is large enough to store the image (about 5 GB for the above one). Fot the netisnt version, you only require about 200MB.
+
+Next we need to specify a grub.cfg file in our /boot/grub/ directory which has been handily specified for us on the aforementioned web page.
+
+> cp /home/abuahchu/sysadmin/grub.cfg /mnt/usb/boot/grub/
+
+Lastly we need a "preseed" directory at the root of the USB flash drive:
+
+>mkdir /mnt/usb/preseed/
+
+I have copied /var/www/d-i/2011-preseed.cfg from hurd into my home directory using ssh.
+Now:
+
+>cp /home/abuahchu/sysadmin/preseed.cfg /mnt/usb/preseed
+
+And to satisfy naming requirements:
+
+>mv /mnt/usb/preseed/preseed.cfg /mnt/usb/preseed/standard-squeeze.preseed
+
+And finally:
+
+>umount /mnt/usb
+
+Now eject the flash drive and remove it. Boot into it with any 64 bit machine on the Mathlan and select an automatic install in the Grub menu. Hopefully, it will perform an automated, expert install of Debian on that machine with (mostly) preset option choices.
+
+
+
+
+
+ 
+
+
