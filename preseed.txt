@@ -2,14 +2,17 @@
 # Created:	  July 15, 2010
 # Last modified:  July 19, 2012
 # Authors:	  Martin Dluhos, John David Stone, Chike Abuah
-# Description:	  This file serves as a preconfiguration file for debian-installer. It provides answers to questions asked during the installation of Debian automating the whole process.
+# Description:	  This file serves as a preconfiguration file for debian-installer. 
+#It provides answers to questions asked during the installation of Debian automating the whole process.
 
-# The general format of a line in a preconfiguration file is the following: <owner> <question name> <question type> <value>.
+# The general format of a line in a preconfiguration file is the following: 
+#<owner> <question name> <question type> <value>.
 
 
 ### Localization
 
-# The values for setting locale can be preseeded individually by specifying language, country and encoding for greater flexibility.
+# The values for setting locale can be preseeded individually by specifying language, country 
+#and encoding for greater flexibility.
 d-i debian-installer/language string en
 d-i debian-installer/country string US
 d-i debian-installer/locale string en_US.UTF-8
@@ -177,7 +180,8 @@ d-i passwd/make-user boolean false
 # or encrypted using an MD5 hash.
 #d-i passwd/root-password-crypted password [MD5 hash]
 
-# Note: normal user account might be needed if root's password is not set correctly- therefore leaving here commented out
+# Note: normal user account might be needed if root's password is not set correctly- 
+#therefore leaving here commented out
 # To create a normal user account.
 # d-i passwd/user-fullname string Debian User
 # d-i passwd/username string debian
@@ -234,7 +238,8 @@ d-i base-installer/keyboard-configuration/variant select USA
 # uncomment this:
 d-i grub-installer/grub2_instead_of_grub_legacy boolean true
 
-# Note: The following line will need to vary on single and dual-boot machines. Uncomment the "with_other_os" option to install on dual-boot.
+# Note: The following line will need to vary on single and dual-boot machines. 
+#Uncomment the "with_other_os" option to install on dual-boot.
 # This is fairly safe to set, it makes grub install automatically to the MBR
 # if no other operating system is detected on the machine.
 d-i grub-installer/only_debian boolean true
@@ -262,7 +267,8 @@ d-i grub-installer/with_other_os boolean true
 # directly, or use the apt-install and in-target commands to easily install
 # packages and run commands in the target system.
 # Get these scripts from hurd and run them at the end of the installation
-# d-i preseed/late_command string wget http://132.161.196.22/d-i/configure_root.sh -O /tmp/configure_root.sh; chmod +x /tmp/configure_root.sh; /tmp/configure_root.sh
+# d-i preseed/late_command string wget http://132.161.196.22/d-i/configure_root.sh -O /tmp/configure_root.sh; 
+# chmod +x /tmp/configure_root.sh; /tmp/configure_root.sh
 
 
 
