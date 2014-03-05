@@ -85,11 +85,13 @@ Grub was sucessfully installed. Now to set up the hd-media method of the Debian 
 
 > cp /home/abuahchu/sysadmin/isos/debian-6.0.5-i386-netinst.iso /mnt/usb/isos/
 
-I actually used the net installer ("netinst") version of the 64bit .iso image, but this way may be more convenient in retrospect. 
+I actually used the net installer ("netinst") version of the 64bit .iso image, 
+but this way may be more convenient in retrospect. 
 As long as your dlash drive is large enough to store the image (about 5 GB for the above one). 
 For the netisnt version, you only require about 200MB.
 
-Next we need to specify a grub.cfg file in our /boot/grub/ directory which has been handily specified for us on the aforementioned web page.
+Next we need to specify a grub.cfg file in our /boot/grub/ directory,
+which has been handily specified for us on the aforementioned web page.
 
 > cp /home/abuahchu/sysadmin/grub.cfg /mnt/usb/boot/grub/
 
