@@ -7,11 +7,13 @@ abuahchu@grinnell.edu
 Log file for setting up preseed thumb-drive for 64 bit machines on the Mathlan. 
 Tested on mathews.cs.grinnell.edu with general success.
 
-I started with a 4GB Kingston flashdrive and searched for a comprehensive guide online for the Debian preseed installation procedure using a flash drive. 
+I started with a 4GB Kingston flashdrive and searched for a comprehensive guide
+online for the Debian preseed installation procedure using a flash drive. 
 
 I found one here: http://www.wallix.org/2011/11/02/automatic-installation-of-debian-squeeze-from-a-usb-flash-drive/
 
-To prepare the USB flash drive, I inserted it into michie's USB port and logged on as root. I then ran a search for all the partitions on the system using:
+To prepare the USB flash drive, I inserted it into michie's USB port and logged on as root. 
+I then ran a search for all the partitions on the system using:
 
 >fdisk -l
 
@@ -19,7 +21,8 @@ I identified the flash drive as being attached to /dev/sdb. I ran fdisk in comma
 
 >fdisk /dev/sdb
 
-In command mode, you use single-letter commands to specify the actions you wish to take. I began by removing the two existing partitions on the flash drive.
+In command mode, you use single-letter commands to specify the actions you wish to take. 
+I began by removing the two existing partitions on the flash drive.
 
 To print and identify the partitions:
 
@@ -32,12 +35,14 @@ Then
 >d
 >2
 
-At this point I created two new partitions to store the preseeder. In retrospect, however, we shall only need one.
+At this point I created two new partitions to store the preseeder. 
+In retrospect, however, we shall only need one.
 
 >n 
 >p (primary partition here)
 
-Here we must specify the size of the partition. Since we shall only need one, just hit the enter key twice to use the default: the entire flash drive.
+Here we must specify the size of the partition. 
+Since we shall only need one, just hit the enter key twice to use the default: the entire flash drive.
 Now we make this partition bootable:
 
 >a
@@ -54,7 +59,8 @@ Now we shall create a filesystem on our partition:
 or
 >mkfs.ext3 /dev/sdc1
 
-There were a few complaints about being unable to create the filesystem because /dev/sdc was currently mounted, at which point this helped:
+There were a few complaints about being unable to create the filesystem
+because /dev/sdc was currently mounted, at which point this helped:
 
 >umount /dev/sdc1
 
@@ -79,7 +85,9 @@ Grub was sucessfully installed. Now to set up the hd-media method of the Debian 
 
 > cp /home/abuahchu/sysadmin/isos/debian-6.0.5-i386-netinst.iso /mnt/usb/isos/
 
-I actually used the net installer ("netinst") version of the 64bit .iso image, but this way may be more convenient in retrospect. As long as your dlash drive is large enough to store the image (about 5 GB for the above one). Fot the netisnt version, you only require about 200MB.
+I actually used the net installer ("netinst") version of the 64bit .iso image, but this way may be more convenient in retrospect. 
+As long as your dlash drive is large enough to store the image (about 5 GB for the above one). 
+For the netisnt version, you only require about 200MB.
 
 Next we need to specify a grub.cfg file in our /boot/grub/ directory which has been handily specified for us on the aforementioned web page.
 
@@ -102,7 +110,9 @@ And finally:
 
 >umount /mnt/usb
 
-Now eject the flash drive and remove it. Boot into it with any 64 bit machine on the Mathlan and select an automatic install in the Grub menu. Hopefully, it will perform an automated, expert install of Debian on that machine with (mostly) preset option choices.
+Now eject the flash drive and remove it. 
+Boot into it with any 64 bit machine on the Mathlan and select an automatic install in the Grub menu. 
+Hopefully, it will perform an automated, expert install of Debian on that machine with (mostly) preset option choices.
 
 
 
